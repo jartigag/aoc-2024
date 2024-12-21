@@ -20,17 +20,22 @@ from typing import *
 # - **Input**: Parse the day's input file with the function `parse`.
 # - **Part 1**: Understand the day's instructions and:
 #    - Write code to compute the answer to Part 1.
-#    - Once I have computed the  answer and submitted it to the AoC site to verify it is correct, I  record it with the `answer` class.
+#    - Once I have computed the  answer and submitted it to the AoC site to verify it is correct,
+#      I record it with the `answer` class.
 # - **Part 2**: Repeat the above steps for Part 2.
 
 # __Parsing Input Files__
-# The function `parse` is meant to handle each day's input. A call `parse(day, parser, sections)` does the following:
+# The function `parse` is meant to handle each day's input.
+# A call `parse(day, parser, sections)` does the following:
 # - Reads the input file for `day`.
-# - Breaks the file into a *sections*. By default, this is lines, but you can use `paragraphs`, or pass in a custom function.
+# - Breaks the file into a *sections*.
+#   By default, this is lines, but you can use `paragraphs`, or pass in a custom function.
 # - Applies `parser` to each section and returns the results as a tuple of records.
 #     - Useful parser functions include `ints`, `digits`, `atoms`, `words`, and the built-ins `int` and `str`.
-# - Prints the first few input lines and output records. This is useful to me as a debugging tool, and to the reader.
-# - The defaults are `parser=str, sections=lines`, so by default `parse(n)` gives a tuple of lines from fuile *day*.
+# - Prints the first few input lines and output records.
+#   This is useful to me as a debugging tool, and to the reader.
+# - The defaults are `parser=str, sections=lines`,
+#   so by default `parse(n)` gives a tuple of lines from fuile *day*.
 
 lines = str.splitlines # By default, split input text into lines
 
@@ -366,6 +371,7 @@ def neighbors(point, directions=directions4) -> List[Point]:
 if __name__ == "__main__":
     def tests():
         """Run tests on utility functions. Also serves as usage examples."""
+
         # PARSER
 
         assert parse("hello\nworld", show=0) == ('hello', 'world')
@@ -380,13 +386,18 @@ if __name__ == "__main__":
         assert positive_ints('hello, cruel_world! 24-7') == (24, 7)
 
         # UTILITIES
+
         assert total(Counter('hello, world')) == 12
         assert cover(3, 1, 4, 1, 5) == range(1, 6)
         assert T([(1, 2, 3), (4, 5, 6)]) == [(1, 4), (2, 5), (3, 6)]
         assert the({1}) == 1
         assert union([{1, 2}, {3, 4}, {5, 6}]) == {1, 2, 3, 4, 5, 6}
 
+        # ITERTOOL RECIPES
+        assert append(([1, 2], [3, 4], [5, 6])) == [1, 2, 3, 4, 5, 6]
+
         # POINTS
+
         p, q = (0, 3), (4, 0)
         assert Y_(p) == 3 and X_(q) == 4
         assert distance(p, q) == 5
