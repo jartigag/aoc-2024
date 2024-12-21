@@ -146,17 +146,14 @@ class answer:
                    f' WRONG; expected answer is {self.solution}')
         return f'Puzzle {self.puzzle:4.1f}: {secs} seconds, answer {self.got:<15}{comment}'
 
-def report(answers):
+def summary(answers):
+    """Print a report that summarizes the answers."""
+    from statistics  import mean, median
     for d in sorted(answers):
         print(answers[d])
-    secs = sum(answers[d].secs for d in answers)
-    print(f'\nTotal time {secs:.4f} seconds, Mean time {secs/len(answers):.4f} seconds')
-
-def test_answer():
-    print(answer(0.1, unknown))
-    print(answer(0.2, 2**39,   lambda: 2**39))
-    print(answer(0.3, 2**39,   lambda: 2**39+1))
-    print(answer(10.4, unknown, lambda: 2 + 2))
+    times = [answers[d].secs for d in answers]
+    print(f'\nCorrect: {quantify(answers[d].ok for d in answers)}/{len(answers)}')
+    print(f'\nTime in seconds: {median(times):.3f} median, {mean(times):.3f} mean, {sum(times):.3f} total.')
 
 # __Additional utility functions__
 # All of the following have been used in solutions to multiple puzzles in the past,
@@ -209,6 +206,10 @@ def mapt(function: Callable, *sequences) -> tuple:
 from itertools import chain
 
 flatten = chain.from_iterable # Yield items from each sequence in turn
+
+def quantify(iterable, pred=bool) -> int:
+    """Count the number of items in iterable for which pred is true."""
+    return sum(1 for item in iterable if pred(item))
 
 def append(sequences) -> Sequence: "Append into a list"; return list(flatten(sequences))
 
